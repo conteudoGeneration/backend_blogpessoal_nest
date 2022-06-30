@@ -9,7 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       port: 3306,
       username: 'root',
       password: 'root',
-      database: 'db_blog_pessoal',
+      database: 'db_blogpessoal',
       entities: [],
       synchronize: true,
     })
@@ -18,3 +18,4 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   providers: [],
 })
 export class AppModule {}
+
