@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { resolve } from "path";
 import { Like, Repository } from "typeorm";
 import { Postagem } from "../Entities/postagem.entity";
 
@@ -39,10 +40,15 @@ export class PostagemService {
     }
 
     async update(postagem: Postagem): Promise<Postagem> {
-        let post = this.findOneById(postagem.id);
+        
+        let post: Postagem = await this.findOneById(postagem.id);
+        
+        if (post === undefined)
+            throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
+        
         return await this.postagemRepository.save(postagem);
     }
-    
+
 }
 
 
