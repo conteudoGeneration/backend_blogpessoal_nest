@@ -34,6 +34,15 @@ export class PostagemService {
         })
     }
 
+    async create(postagem: Postagem): Promise<Postagem> {
+        return await this.postagemRepository.save(postagem);
+    }
+
+    async update(postagem: Postagem): Promise<Postagem> {
+        let post = this.findOneById(postagem.id);
+        return await this.postagemRepository.save(postagem);
+    }
+    
 }
 
 
