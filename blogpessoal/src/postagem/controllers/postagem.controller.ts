@@ -18,4 +18,10 @@ export class PostagemController {
     return this.service.findOneById(id);
   }
 
+  @Get('/titulo/:titulo')
+  @HttpCode(HttpStatus.OK)
+  findByTitulo(@Param('titulo') titulo: string): Promise<Postagem[]> {
+    return this.service.findByTitulo(titulo);
+  }
+
 }

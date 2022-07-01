@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Like, Repository } from "typeorm";
 import { Postagem } from "../Entities/postagem.entity";
 
 @Injectable()
@@ -26,6 +26,12 @@ export class PostagemService {
             throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
 
         return postagem;
+    }
+
+    async findByTitulo(titulo: string): Promise<Postagem[]> {
+        return await this.postagemRepository.findBy({
+            titulo: Like(`%${titulo}%`)
+        })
     }
 
 }
