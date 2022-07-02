@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, HttpCode, HttpStatus, Param, Body } from "@nestjs/common";
+import { Controller, Get, Post, Put, Delete, HttpCode, HttpStatus, Param, Body, HttpException } from "@nestjs/common";
 import { Postagem } from "../entities/postagem.entity";
 import { PostagemService } from "../services/postagem.service";
 
@@ -34,6 +34,18 @@ export class PostagemController {
   @HttpCode(HttpStatus.OK)
   put(@Body() post: Postagem): Promise<Postagem> {
     return this.service.update(post);
+  }
+
+  @Delete('/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  delete(@Param('id') id: number) {
+    const resultadoDelete = this.service.delete(id);
+    
+    if (resultadoDelete === undefined)
+        throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
+    else
+        return resultadoDelete;
+
   }
 
 }

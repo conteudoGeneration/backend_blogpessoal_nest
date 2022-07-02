@@ -1,7 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { resolve } from "path";
-import { Like, Repository } from "typeorm";
+import { DeleteResult, Like, Repository } from "typeorm";
 import { Postagem } from "../Entities/postagem.entity";
 
 @Injectable()
@@ -27,6 +26,7 @@ export class PostagemService {
             throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
 
         return postagem;
+            
     }
 
     async findByTitulo(titulo: string): Promise<Postagem[]> {
@@ -47,6 +47,14 @@ export class PostagemService {
             throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
         
         return await this.postagemRepository.save(postagem);
+    }
+
+    async delete(id: number): Promise<DeleteResult> {
+        
+        let postagem = await this.findOneById(id);
+
+        return await this.postagemRepository.delete(id);
+
     }
 
 }
