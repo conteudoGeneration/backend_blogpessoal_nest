@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Postagem } from "../Entities/postagem.entity";
+import { Postagem } from "../entities/postagem.entity";
 
 @Injectable()
 export class PostagemService {
