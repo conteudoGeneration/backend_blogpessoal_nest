@@ -58,16 +58,14 @@ Usuario --> Postagem
 
 # Referências sobre NestJS
 
-<!-- <br />
+<br />
 
-<a href="https://spring.io/" target="_blank">Documentação Oficial do Spring</a>
+<a href="https://docs.nestjs.com/" target="_blank">Documentação Oficial do NestJS</a>
 
-<a href="https://maven.apache.org/" target="_blank">Documentação Oficial do Maven</a>
+<a href="https://typeorm.io/" target="_blank">Documentação Oficial do TypeORM</a>
 
-<a href="https://mvnrepository.com/" target="_blank">Repositório do Maven</a>
+<a href="https://www.typescriptlang.org/pt/docs/" target="_blank">Documentação Oficial TypeScript</a>
 
-<a href="https://www.baeldung.com/" target="_blank">Baeldung</a>
+<a href="https://docs.npmjs.com/" target="_blank">Documentação do NPM</a>
 
-<a href="https://blog.algaworks.com/" target="_blank">Blog da Algaworks</a>
-
-<a href="https://www.michellibrito.com/" target="_blank">Michelli Brito</a> -->
+<a href="https://www.tutorialspoint.com/typeorm/typeorm_quick_guide.htm" target="_blank">Guia do TypeORM</a>
