@@ -1,4 +1,4 @@
-import { Postagem } from "src/postagem/Entities/postagem.entity";
+import { Postagem } from "src/postagem/entities/postagem.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: "tb_temas"})
