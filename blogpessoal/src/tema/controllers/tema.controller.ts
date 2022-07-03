@@ -42,7 +42,7 @@ export class TemaController {
     const resultadoDelete = this.temaService.delete(id);
     
     if (resultadoDelete === undefined)
-        throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
+        throw new HttpException('Tema não encontrado!', HttpStatus.NOT_FOUND);
     else
         return resultadoDelete;
 
