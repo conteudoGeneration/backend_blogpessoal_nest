@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Usuario } from '../entities/usuario.entity';
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class UsuarioService {
@@ -53,6 +54,7 @@ export class UsuarioService {
         const usuer = await this.findOneByUserName(usuario.usuario);
 
         if (!usuario) {
+            usuario.senha = await bcrypt.hash(usuario.senha, 10)
             return await this.usuarioRepository.save(usuario);
         }
 
@@ -71,6 +73,7 @@ export class UsuarioService {
         if (user.id !== usuario.id)
             throw new HttpException('O Usuário (e-mail) já Cadastrado, digite outro!', HttpStatus.NOT_FOUND);
 
+        usuario.senha = await bcrypt.hash(usuario.senha, 10)
         return await this.usuarioRepository.save(usuario);
 
     }
