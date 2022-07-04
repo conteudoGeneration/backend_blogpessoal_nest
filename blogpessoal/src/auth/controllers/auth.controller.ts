@@ -15,7 +15,7 @@ export class AuthController {
     }
 
     @HttpCode(HttpStatus.CREATED)
-    @Post('auth/cadastrar')
+    @Post('/cadastrar')
     async cadastrar(@Body() user: Usuario): Promise<Usuario> {
         return await this.authService.cadastrar(user);
     }
