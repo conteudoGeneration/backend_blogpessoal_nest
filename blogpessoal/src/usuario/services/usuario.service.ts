@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Usuario } from '../entities/usuario.entity';
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class UsuarioService {
@@ -14,9 +15,6 @@ export class UsuarioService {
         return await this.usuarioRepository.findOne({
             where: {
                 usuario: username
-            },
-            relations: {
-                postagem: true
             }
         })
     }
@@ -36,9 +34,6 @@ export class UsuarioService {
         let usuario = await this.usuarioRepository.findOne({
             where: {
                 id
-            },
-            relations: {
-                postagem: true
             }
         });
 
@@ -49,29 +44,31 @@ export class UsuarioService {
 
     }
 
-    async create(usuario: Usuario): Promise<Usuario> {
-        const usuer = await this.findOneByUserName(usuario.usuario);
+    async create(user: Usuario): Promise<Usuario> {
+        const usuarioBusca = await this.findOneByUserName(user.usuario);
 
-        if (!usuario) {
-            return await this.usuarioRepository.save(usuario);
+        if (!usuarioBusca) {
+            user.senha = await bcrypt.hash(user.senha, 10)
+            return await this.usuarioRepository.save(user);
         }
 
         throw new HttpException("O Usuario ja existe!", HttpStatus.BAD_REQUEST);
 
     }
 
-    async update(usuario: Usuario): Promise<Usuario> {
+    async update(user: Usuario): Promise<Usuario> {
 
-        const user = await this.findOneByUserName(usuario.usuario);
-        let usuarioUpdate: Usuario = await this.findOneById(usuario.id);
+        let usuarioUpdate: Usuario = await this.findOneById(user.id);
+        const usuarioBusca = await this.findOneByUserName(user.usuario);
 
         if (usuarioUpdate === undefined)
             throw new HttpException('Usuário não encontrado!', HttpStatus.NOT_FOUND);
 
-        if (user.id !== usuario.id)
-            throw new HttpException('O Usuário (e-mail) já Cadastrado, digite outro!', HttpStatus.NOT_FOUND);
+        if (usuarioBusca && usuarioBusca.id !== user.id)
+            throw new HttpException('Usuário (e-mail) já Cadastrado, digite outro!', HttpStatus.BAD_REQUEST);
 
-        return await this.usuarioRepository.save(usuario);
+        user.senha = await bcrypt.hash(user.senha, 10)
+        return await this.usuarioRepository.save(user);
 
     }
 
