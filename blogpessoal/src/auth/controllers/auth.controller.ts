@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
-import { Usuario } from 'src/usuario/entities/usuario.entity';
+import { Usuario } from '../../usuario/entities/usuario.entity';
 import { LocalAuthGuard } from '../guard/local-auth.guard';
 import { AuthService } from '../services/auth.service';
 
