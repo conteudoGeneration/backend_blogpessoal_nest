@@ -1,3 +1,4 @@
+import { IsEmail, IsNotEmpty } from "class-validator"
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Postagem } from "../../postagem/entities/postagem.entity"
 
@@ -10,9 +11,11 @@ export class Usuario {
     @Column({length: 80, nullable: false}) 
     public nome: string
 
+    @IsEmail()
     @Column({length: 80, nullable: false }) 
     public usuario: string
 
+    @IsNotEmpty()
     @Column({length: 255, nullable: false }) 
     public senha: string
 
