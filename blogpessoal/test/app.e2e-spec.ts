@@ -1,18 +1,13 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { response } from 'express';
-import { stringify } from 'querystring';
-import { Any, Entity } from 'typeorm';
-import { Usuario } from '../src/usuario/entities/usuario.entity';
-import { AppModule } from './../src/app.module';
 import * as request from 'supertest';
+import { AppModule } from './../src/app.module';
 
 describe('AppController (e2e)', () => {
 
   let token: any;
   let usuarioId: any;
-
   let app: INestApplication;
 
   beforeAll(async () => {
@@ -24,7 +19,7 @@ describe('AppController (e2e)', () => {
           port: 3306,
           username: 'root',
           password: 'root',
-          database: 'db_blogpessoal_test',
+          database: 'db_teste',
           autoLoadEntities: true,
           synchronize: true,
           logging: false,
@@ -44,7 +39,7 @@ describe('AppController (e2e)', () => {
 
   it('Deve Cadastrar Usuario', async () => {
     const resposta = await request(app.getHttpServer())
-      .post('/auth/cadastrar')
+      .post('/usuarios/cadastrar')
       .send({
         nome: 'Root',
         usuario: 'root@root.com',
@@ -72,7 +67,7 @@ describe('AppController (e2e)', () => {
 
   it('Não Deve Duplicar o Usuário', async () => {
     return request(app.getHttpServer())
-      .post('/auth/cadastrar')
+      .post('/usuarios/cadastrar')
       .send({
         nome: 'Root',
         usuario: 'root@root.com',
