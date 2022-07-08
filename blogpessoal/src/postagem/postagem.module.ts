@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Postagem } from "./Entities/postagem.entity";
+import { Postagem } from "./entities/postagem.entity";
 
 @Module({
     imports: [TypeOrmModule.forFeature([Postagem])],
@@ -9,5 +9,3 @@ import { Postagem } from "./Entities/postagem.entity";
     exports: [TypeOrmModule]
 })
 export class PostagemModule {}
-
-
