@@ -21,4 +21,3 @@ import { PostagemModule } from './postagem/postagem.module';
   providers: [],
 })
 export class AppModule {}
-
