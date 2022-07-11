@@ -14,7 +14,7 @@ export class PostagemService {
         return await this.postagemRepository.find();
     }
 
-    async findOneById(id: number): Promise<Postagem> {
+    async findById(id: number): Promise<Postagem> {
 
         let postagem = await this.postagemRepository.findOne({
             where: {
