@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, HttpStatus, Param } from "@nestjs/common";
+import { Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe } from "@nestjs/common";
 import { Postagem } from "../entities/postagem.entity";
 import { PostagemService } from "../services/postagem.service";
 
@@ -14,8 +14,8 @@ export class PostagemController {
 
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
-  findById(@Param('id') id: number): Promise<Postagem> {
-    return this.service.findOneById(id);
+  findById(@Param('id', ParseIntPipe) id: number): Promise<Postagem> {
+    return this.service.findById(id);
   }
 
   @Get('/titulo/:titulo')
