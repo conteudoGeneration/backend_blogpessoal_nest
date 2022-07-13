@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, HttpCode, HttpStatus, Param, Body, HttpException } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
 import { Postagem } from "../entities/postagem.entity";
 import { PostagemService } from "../services/postagem.service";
 
@@ -14,8 +14,8 @@ export class PostagemController {
 
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
-  findById(@Param('id') id: number): Promise<Postagem> {
-    return this.service.findOneById(id);
+  findById(@Param('id', ParseIntPipe) id: number): Promise<Postagem> {
+    return this.service.findById(id);
   }
 
   @Get('/titulo/:titulo')
@@ -26,26 +26,20 @@ export class PostagemController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  post(@Body() post: Postagem): Promise<Postagem> {
-    return this.service.create(post);
+  create(@Body() postagem: Postagem): Promise<Postagem> {
+    return this.service.create(postagem);
   }
 
   @Put()
   @HttpCode(HttpStatus.OK)
-  put(@Body() post: Postagem): Promise<Postagem> {
-    return this.service.update(post);
+  update(@Body() postagem: Postagem): Promise<Postagem> {
+    return this.service.update(postagem);
   }
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  delete(@Param('id') id: number) {
-    const resultadoDelete = this.service.delete(id);
-    
-    if (resultadoDelete === undefined)
-        throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
-    else
-        return resultadoDelete;
-
+  delete(@Param('id', ParseIntPipe) id: number){
+    return this.service.delete(id);
   }
 
 }
