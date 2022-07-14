@@ -1,3 +1,4 @@
+import { Postagem } from 'src/postagem/entities/postagem.entity';
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, ILike, Repository } from "typeorm";
@@ -11,7 +12,11 @@ export class TemaService {
     ) { }
 
     async findAll(): Promise<Tema[]> {
-        return await this.temaRepository.find();
+        return await this.temaRepository.find({
+            relations:{
+                postagem: true
+            }
+        });
     }
 
     async findById(id: number): Promise<Tema> {
@@ -19,19 +24,25 @@ export class TemaService {
         let tema = await this.temaRepository.findOne({
             where: {
                 id
+            },
+            relations:{
+                postagem: true
             }
         });
 
-        if (!Tema)
+        if (!tema)
             throw new HttpException('Tema não encontrado!', HttpStatus.NOT_FOUND);
 
         return tema;
     }
 
-    async findByTitulo(descricao: string): Promise<Tema[]> {
+    async findByDescricao(descricao: string): Promise<Tema[]> {
         return await this.temaRepository.find({
             where:{
                 descricao: ILike(`%${descricao}%`)
+            },
+            relations:{
+                postagem: true
             }
         })
     }
