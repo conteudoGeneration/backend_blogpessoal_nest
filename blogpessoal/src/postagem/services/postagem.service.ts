@@ -42,7 +42,7 @@ export class PostagemService {
 
     async update(postagem: Postagem): Promise<Postagem> {
         
-        let buscaPostagem: Postagem = await this.findById(postagem.id);
+        let buscaPostagem = await this.findById(postagem.id);
 
         if (!buscaPostagem || !postagem.id)
             throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
