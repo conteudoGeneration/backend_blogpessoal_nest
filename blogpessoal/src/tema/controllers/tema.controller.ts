@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, HttpCode, HttpStatus, Param, Body, HttpException } from "@nestjs/common";
+import { Controller, Get, Post, Put, Delete, HttpCode, HttpStatus, Param, Body, HttpException, ParseIntPipe } from "@nestjs/common";
 import { Tema } from "../entities/tema.entity";
 import { TemaService } from "../services/tema.service";
 
@@ -14,38 +14,32 @@ export class TemaController {
 
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
-  findById(@Param('id') id: number): Promise<Tema> {
-    return this.temaService.findOneById(id);
+  findById(@Param('id', ParseIntPipe) id: number): Promise<Tema> {
+    return this.temaService.findById(id);
   }
 
-  @Get('/descricao/:descricao')
+  @Get('/titulo/:titulo')
   @HttpCode(HttpStatus.OK)
-  findByTitulo(@Param('descricao') descricao: string): Promise<Tema[]> {
-    return this.temaService.findByDescricao(descricao);
+  findByTitulo(@Param('titulo') titulo: string): Promise<Tema[]> {
+    return this.temaService.findByTitulo(titulo);
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  post(@Body() tema: Tema): Promise<Tema> {
-    return this.temaService.create(tema);
+  create(@Body() Tema: Tema): Promise<Tema> {
+    return this.temaService.create(Tema);
   }
 
   @Put()
   @HttpCode(HttpStatus.OK)
-  put(@Body() tema: Tema): Promise<Tema> {
-    return this.temaService.update(tema);
+  update(@Body() Tema: Tema): Promise<Tema> {
+    return this.temaService.update(Tema);
   }
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  delete(@Param('id') id: number) {
-    const resultadoDelete = this.temaService.delete(id);
-    
-    if (resultadoDelete === undefined)
-        throw new HttpException('Tema não encontrado!', HttpStatus.NOT_FOUND);
-    else
-        return resultadoDelete;
-
+  delete(@Param('id', ParseIntPipe) id: number){
+    return this.temaService.delete(id);
   }
 
 }

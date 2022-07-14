@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, Like, Repository } from "typeorm";
+import { DeleteResult, ILike, Repository } from "typeorm";
 import { Tema } from "../entities/tema.entity";
 
 @Injectable()
@@ -11,40 +11,27 @@ export class TemaService {
     ) { }
 
     async findAll(): Promise<Tema[]> {
-        return await this.temaRepository.find(
-            {
-                relations:{
-                    postagem: true
-                }
-            }
-        );
+        return await this.temaRepository.find();
     }
 
-    async findOneById(id: number): Promise<Tema> {
+    async findById(id: number): Promise<Tema> {
 
         let tema = await this.temaRepository.findOne({
             where: {
                 id
-            },
-            relations: {
-                postagem: true
             }
         });
 
-        if (!tema)
+        if (!Tema)
             throw new HttpException('Tema não encontrado!', HttpStatus.NOT_FOUND);
 
         return tema;
-            
     }
 
-    async findByDescricao(descricao: string): Promise<Tema[]> {
+    async findByTitulo(descricao: string): Promise<Tema[]> {
         return await this.temaRepository.find({
-            where: {
-                descricao: Like(`%${descricao}%`),
-            },
-            relations: {
-                postagem: true
+            where:{
+                descricao: ILike(`%${descricao}%`)
             }
         })
     }
@@ -55,9 +42,9 @@ export class TemaService {
 
     async update(tema: Tema): Promise<Tema> {
         
-        let temaUpdate: Tema = await this.findOneById(tema.id);
+        let buscaTema = await this.findById(tema.id);
 
-        if (temaUpdate === undefined)
+        if (!buscaTema || !tema.id)
             throw new HttpException('Tema não encontrado!', HttpStatus.NOT_FOUND);
         
         return await this.temaRepository.save(tema);
@@ -65,7 +52,10 @@ export class TemaService {
 
     async delete(id: number): Promise<DeleteResult> {
         
-        let Tema = await this.findOneById(id);
+        let buscaTema = await this.findById(id);
+
+        if (!buscaTema)
+            throw new HttpException('Tema não encontrado!', HttpStatus.NOT_FOUND);
 
         return await this.temaRepository.delete(id);
 
