@@ -19,7 +19,7 @@ describe('AppController (e2e)', () => {
           port: 3306,
           username: 'root',
           password: 'root',
-          database: 'db_teste',
+          database: 'db_blogpessoal_test',
           autoLoadEntities: true,
           synchronize: true,
           logging: false,

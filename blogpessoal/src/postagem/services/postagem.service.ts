@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, Like, Repository } from "typeorm";
+import { DeleteResult, ILike, Repository } from "typeorm";
 import { Postagem } from "../entities/postagem.entity";
 
 @Injectable()
@@ -11,22 +11,20 @@ export class PostagemService {
     ) { }
 
     async findAll(): Promise<Postagem[]> {
-        return await this.postagemRepository.find(
-            {
-                relations:{
-                    tema: true
-                }
+        return await this.postagemRepository.find({
+            relations:{
+                tema: true
             }
-        );
+        });
     }
 
-    async findOneById(id: number): Promise<Postagem> {
+    async findById(id: number): Promise<Postagem> {
 
         let postagem = await this.postagemRepository.findOne({
             where: {
                 id
             },
-            relations: {
+            relations:{
                 tema: true
             }
         });
@@ -35,15 +33,14 @@ export class PostagemService {
             throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
 
         return postagem;
-            
     }
 
     async findByTitulo(titulo: string): Promise<Postagem[]> {
         return await this.postagemRepository.find({
-            where: {
-                titulo: Like(`%${titulo}%`)
+            where:{
+                titulo: ILike(`%${titulo}%`)
             },
-            relations: {
+            relations:{
                 tema: true
             }
         })
@@ -55,9 +52,9 @@ export class PostagemService {
 
     async update(postagem: Postagem): Promise<Postagem> {
         
-        let post: Postagem = await this.findOneById(postagem.id);
+        let buscaPostagem = await this.findById(postagem.id);
 
-        if (post === undefined)
+        if (!buscaPostagem || !postagem.id)
             throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
         
         return await this.postagemRepository.save(postagem);
@@ -65,12 +62,13 @@ export class PostagemService {
 
     async delete(id: number): Promise<DeleteResult> {
         
-        let postagem = await this.findOneById(id);
+        let buscaPostagem = await this.findById(id);
+
+        if (!buscaPostagem)
+            throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
 
         return await this.postagemRepository.delete(id);
 
     }
 
 }
-
-
