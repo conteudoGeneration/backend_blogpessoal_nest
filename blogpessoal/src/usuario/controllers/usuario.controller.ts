@@ -14,13 +14,13 @@ export class UsuarioController {
 
     @HttpCode(HttpStatus.CREATED)
     @Post('/cadastrar')
-    async cadastrar(@Body() usuario: Usuario): Promise<Usuario> {
+    async create(@Body() usuario: Usuario): Promise<Usuario> {
         return await this.usuarioService.create(usuario);
     }
 
     @Put('/atualizar')
     @HttpCode(HttpStatus.OK)
-    put(@Body() usuario: Usuario): Promise<Usuario> {
+    async update(@Body() usuario: Usuario): Promise<Usuario> {
         return this.usuarioService.update(usuario);
     }
 
