@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, HttpCode, HttpStatus, Param, Body, 
 import { Tema } from "../entities/tema.entity";
 import { TemaService } from "../services/tema.service";
 
-@Controller("/temas")
+@Controller("/tema")
 export class TemaController {
   constructor(private readonly temaService: TemaService) { }
 
