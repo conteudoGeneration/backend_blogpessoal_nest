@@ -56,12 +56,13 @@ describe('AppController (e2e)', () => {
     const resposta = await request(app.getHttpServer())
       .post('/auth/logar')
       .send({
-        username: 'root@root.com',
-        password: 'rootroot',
+        usuario: 'root@root.com',
+        senha: 'rootroot',
       });
     expect(200)
 
-    token = resposta.body.access_token;
+    token = resposta.body.token;
+    console.log(token)
 
   });
 
@@ -80,7 +81,7 @@ describe('AppController (e2e)', () => {
   it('Deve Listar todos os Usuários', async () => {
     return request(app.getHttpServer())
       .get('/usuarios/all')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `${token}`)
       .send({})
       .expect(200)
   });
@@ -88,7 +89,7 @@ describe('AppController (e2e)', () => {
   it('Deve Atualizar um Usuário', async () => {
     return request(app.getHttpServer())
       .put('/usuarios/atualizar')
-      .set('Authorization', `Bearer ` + token)
+      .set('Authorization', `${token}`)
       .send({
         id: usuarioId,
         nome: 'Root Atualizado',
