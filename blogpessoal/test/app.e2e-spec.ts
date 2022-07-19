@@ -37,7 +37,7 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
     await app.close();
   });
 
-  it('Deve Cadastrar Usuario', async () => {
+  it('01 - Deve Cadastrar Usuario', async () => {
     const resposta = await request(app.getHttpServer())
       .post('/usuarios/cadastrar')
       .send({
@@ -52,7 +52,7 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
 
   });
 
-  it('Deve Autenticar Usuario (Login)', async () => {
+  it('02 - Deve Autenticar Usuario (Login)', async () => {
     const resposta = await request(app.getHttpServer())
       .post('/auth/logar')
       .send({
@@ -65,7 +65,7 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
 
   });
 
-  it('Não Deve Duplicar o Usuário', async () => {
+  it('03 - Não Deve Duplicar o Usuário', async () => {
     return request(app.getHttpServer())
       .post('/usuarios/cadastrar')
       .send({
@@ -77,7 +77,7 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
       .expect(400)
   });
 
-  it('Deve Listar todos os Usuários', async () => {
+  it('04 - Deve Listar todos os Usuários', async () => {
     return request(app.getHttpServer())
       .get('/usuarios/all')
       .set('Authorization', `${token}`)
@@ -85,7 +85,7 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
       .expect(200)
   });
 
-  it('Deve Atualizar um Usuário', async () => {
+  it('05 - Deve Atualizar um Usuário', async () => {
     return request(app.getHttpServer())
       .put('/usuarios/atualizar')
       .set('Authorization', `${token}`)
