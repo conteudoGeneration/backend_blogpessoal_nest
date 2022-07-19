@@ -11,3 +11,4 @@ export class AppController {
     return res.redirect('/swagger');
   }
 }
+

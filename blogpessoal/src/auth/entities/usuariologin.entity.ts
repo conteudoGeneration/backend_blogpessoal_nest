@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger"
 
 export class UsuarioLogin {
 
-    @ApiProperty() 
+    @ApiProperty({example: "teste"}) 
     public usuario: string
 
     @ApiProperty() 

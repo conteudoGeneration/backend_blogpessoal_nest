@@ -17,7 +17,7 @@ export class Usuario {
 
     @IsEmail()
     @Column({length: 255, nullable: false })
-    @ApiProperty() 
+    @ApiProperty({example: "email@email.com.br"}) 
     public usuario: string
 
     @IsNotEmpty()
@@ -35,3 +35,11 @@ export class Usuario {
     postagem: Postagem[]
 
 }
+
+function ApiResponseModelProperty(arg0: { example: string }) {
+    throw new Error("Function not implemented.")
+}
+function example(example: any, arg1: string) {
+    throw new Error("Function not implemented.")
+}
+
