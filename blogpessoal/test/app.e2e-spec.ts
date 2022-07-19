@@ -98,7 +98,7 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
       })
       .expect(200)
       .then(resposta =>{
-        expect(resposta.body.nome).toEqual("Root Atualizado");
+        expect("Root Atualizado").toEqual(resposta.body.nome);
       });
   });
 
