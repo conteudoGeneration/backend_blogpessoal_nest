@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 
-describe('AppController (e2e)', () => {
+describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
 
   let token: any;
   let usuarioId: any;
@@ -60,9 +60,8 @@ describe('AppController (e2e)', () => {
         senha: 'rootroot',
       });
     expect(200)
-
+    
     token = resposta.body.token;
-    console.log(token)
 
   });
 
@@ -98,6 +97,9 @@ describe('AppController (e2e)', () => {
         foto: ' '
       })
       .expect(200)
+      .then(resposta =>{
+        expect(resposta.body.nome).toEqual("Root Atualizado");
+      });
   });
 
 });
