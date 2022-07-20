@@ -13,11 +13,11 @@ export class Usuario {
     public nome: string
 
     @IsEmail()
-    @MinLength(8)
     @Column({length: 255, nullable: false })
     public usuario: string
 
     @IsNotEmpty()
+    @MinLength(8)
     @Column({length: 255, nullable: false }) 
     public senha: string
 
