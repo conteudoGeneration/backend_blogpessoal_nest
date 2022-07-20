@@ -35,11 +35,3 @@ export class Usuario {
     postagem: Postagem[]
 
 }
-
-function ApiResponseModelProperty(arg0: { example: string }) {
-    throw new Error("Function not implemented.")
-}
-function example(example: any, arg1: string) {
-    throw new Error("Function not implemented.")
-}
-
