@@ -1,4 +1,3 @@
-import { AppController } from './app.controller';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
@@ -26,7 +25,7 @@ import { UsuarioModule } from './usuario/usuario.module';
     UsuarioModule,
     AuthModule
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}
