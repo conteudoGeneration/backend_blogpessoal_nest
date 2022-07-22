@@ -66,9 +66,9 @@ export class PostagemService {
 
     async update(postagem: Postagem): Promise<Postagem> {
         
-        let post: Postagem = await this.findById(postagem.id);
+        let buscaPostagem: Postagem = await this.findById(postagem.id);
 
-        if (post === undefined)
+        if (!buscaPostagem || !postagem.id)
             throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
 
         if (postagem.tema){
