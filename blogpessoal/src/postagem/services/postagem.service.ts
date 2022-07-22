@@ -66,13 +66,14 @@ export class PostagemService {
 
     async update(postagem: Postagem): Promise<Postagem> {
         
-        let post: Postagem = await this.findById(postagem.id);
+        let buscaPostagem: Postagem = await this.findById(postagem.id);
 
-        if (post === undefined)
+        if (!buscaPostagem || !postagem.id)
             throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND);
 
         if (postagem.tema){
-            const tema = await this.temaService.findById(postagem.tema.id)
+            
+            let tema = await this.temaService.findById(postagem.tema.id)
                 
             if (!tema)
                 throw new HttpException('Tema não encontrado!', HttpStatus.NOT_FOUND);
@@ -83,7 +84,7 @@ export class PostagemService {
         
         return await this.postagemRepository.save(postagem);
     }
-
+    
     async delete(id: number): Promise<DeleteResult> {
         
         let buscaPostagem = await this.findById(id);
