@@ -16,6 +16,9 @@ export class UsuarioService {
         return await this.usuarioRepository.findOne({
             where: {
                 usuario: usuarioname
+            },
+            relations: {
+                postagem: true
             }
         })
     }
@@ -35,6 +38,9 @@ export class UsuarioService {
         let usuario = await this.usuarioRepository.findOne({
             where: {
                 id
+            },
+            relations: {
+                postagem: true
             }
         });
 
