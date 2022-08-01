@@ -12,10 +12,10 @@ export class UsuarioService {
         private bcrypt: Bcrypt
     ) { }
 
-    async findByUsuario(usuarioname: string): Promise<Usuario | undefined> {
+    async findByUsuario(usuario: string): Promise<Usuario | undefined> {
         return await this.usuarioRepository.findOne({
             where: {
-                usuario: usuarioname
+                usuario: usuario
             },
             relations: {
                 postagem: true
@@ -31,6 +31,7 @@ export class UsuarioService {
                 }
             }
         );
+
     }
 
     async findById(id: number): Promise<Usuario> {
@@ -45,7 +46,7 @@ export class UsuarioService {
         });
 
         if (!usuario)
-            throw new HttpException('usuario não encontrado!', HttpStatus.NOT_FOUND);
+            throw new HttpException('Usuario não encontrado!', HttpStatus.NOT_FOUND);
 
         return usuario;
 
