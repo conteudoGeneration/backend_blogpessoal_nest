@@ -64,10 +64,10 @@ export class UsuarioService {
 
     async update(usuario: Usuario): Promise<Usuario> {
 
-        let usuarioUpdate: Usuario = await this.findById(usuario.id);
+        let updateUsuario: Usuario = await this.findById(usuario.id);
         let buscaUsuario = await this.findByUsuario(usuario.usuario);
 
-        if (!usuarioUpdate)
+        if (!updateUsuario)
             throw new HttpException('Usuário não encontrado!', HttpStatus.NOT_FOUND);
 
         if (buscaUsuario && buscaUsuario.id !== usuario.id)
