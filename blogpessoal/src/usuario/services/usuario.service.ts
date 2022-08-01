@@ -16,9 +16,6 @@ export class UsuarioService {
         return await this.usuarioRepository.findOne({
             where: {
                 usuario: usuario
-            },
-            relations: {
-                postagem: true
             }
         })
     }
@@ -54,9 +51,9 @@ export class UsuarioService {
 
     async create(usuario: Usuario): Promise<Usuario> {
         
-        let usuarioBusca = await this.findByUsuario(usuario.usuario);
+        let buscaUsuario = await this.findByUsuario(usuario.usuario);
 
-        if (!usuarioBusca) {
+        if (!buscaUsuario) {
             usuario.senha = await this.bcrypt.gerarHash(usuario.senha)
             return await this.usuarioRepository.save(usuario);
         }
@@ -68,12 +65,12 @@ export class UsuarioService {
     async update(usuario: Usuario): Promise<Usuario> {
 
         let usuarioUpdate: Usuario = await this.findById(usuario.id);
-        let usuarioBusca = await this.findByUsuario(usuario.usuario);
+        let buscaUsuario = await this.findByUsuario(usuario.usuario);
 
         if (!usuarioUpdate)
             throw new HttpException('Usuário não encontrado!', HttpStatus.NOT_FOUND);
 
-        if (usuarioBusca && usuarioBusca.id !== usuario.id)
+        if (buscaUsuario && buscaUsuario.id !== usuario.id)
             throw new HttpException('Usuário (e-mail) já Cadastrado, digite outro!', HttpStatus.BAD_REQUEST);
 
         usuario.senha = await this.bcrypt.gerarHash(usuario.senha)
