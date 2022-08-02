@@ -43,7 +43,7 @@ export class UsuarioService {
         });
 
         if (!usuario)
-            throw new HttpException('Usuario não encontrado!', HttpStatus.NOT_FOUND);
+            throw new HttpException('Usuário não encontrado!', HttpStatus.NOT_FOUND);
 
         return usuario;
 
@@ -58,7 +58,7 @@ export class UsuarioService {
             return await this.usuarioRepository.save(usuario);
         }
 
-        throw new HttpException("O Usuario ja existe!", HttpStatus.BAD_REQUEST);
+        throw new HttpException("O Usuário (e-mail) já existe!", HttpStatus.BAD_REQUEST);
 
     }
 
@@ -71,7 +71,7 @@ export class UsuarioService {
             throw new HttpException('Usuário não encontrado!', HttpStatus.NOT_FOUND);
 
         if (buscaUsuario && buscaUsuario.id !== usuario.id)
-            throw new HttpException('Usuário (e-mail) já Cadastrado!', HttpStatus.BAD_REQUEST);
+            throw new HttpException('O Usuário (e-mail) já existe!', HttpStatus.BAD_REQUEST);
 
         usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha)
         return await this.usuarioRepository.save(usuario);
