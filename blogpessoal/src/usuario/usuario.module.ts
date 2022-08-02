@@ -12,3 +12,4 @@ import { UsuarioService } from './services/usuario.service';
   exports: [UsuarioService],
 })
 export class UsuarioModule {}
+
