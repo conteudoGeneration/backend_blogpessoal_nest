@@ -13,22 +13,24 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<any> {
 
-    const user = await this.usuarioService.findByUsuario(username);
+    const buscaUsuario = await this.usuarioService.findByUsuario(username);
 
-    if (user && this.bcrypt.compararHash(user.senha, password)) {
-      const { senha, ...result } = user;
+    if (buscaUsuario && this.bcrypt.compararHash(buscaUsuario.senha, password)) {
+      const { senha, ...result } = buscaUsuario;
       return result;
     }
     return null;
   }
 
-  async login(user: any) {
-    const payload = { username: user.username, sub: user.userId };
+  async login(usuarioLogin: any) {
+
+    const payload = { username: usuarioLogin.usuario, sub: "blogpessoal" };
 
     return {
-      usuario: user.usuario,
+      usuario: usuarioLogin.usuario,
       token: `Bearer ${this.jwtService.sign(payload)}`,
     };
+    
   }
 
 }
