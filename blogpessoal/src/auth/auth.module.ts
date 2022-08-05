@@ -20,6 +20,6 @@ import { LocalStrategy } from './strategy/local.strategy';
   ],
   providers: [Bcrypt, AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
-  exports: [Bcrypt, AuthService],
+  exports: [Bcrypt],
 })
 export class AuthModule { }
