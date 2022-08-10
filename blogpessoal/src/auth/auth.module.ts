@@ -18,8 +18,8 @@ import { LocalStrategy } from './strategy/local.strategy';
       signOptions: { expiresIn: '24h' },
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, Bcrypt],
+  providers: [Bcrypt, AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
-  exports: [AuthService, Bcrypt],
+  exports: [Bcrypt],
 })
 export class AuthModule { }
