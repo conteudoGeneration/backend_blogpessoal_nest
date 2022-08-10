@@ -50,7 +50,7 @@ export class UsuarioService {
         let usuarioBusca = await this.findByUsuario(usuario.usuario);
 
         if (!usuarioBusca) {
-            usuario.senha = await this.bcrypt.gerarHash(usuario.senha)
+            usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha)
             return await this.usuarioRepository.save(usuario);
         }
 
@@ -69,7 +69,7 @@ export class UsuarioService {
         if (usuarioBusca && usuarioBusca.id !== usuario.id)
             throw new HttpException('Usuário (e-mail) já Cadastrado, digite outro!', HttpStatus.BAD_REQUEST);
 
-        usuario.senha = await this.bcrypt.gerarHash(usuario.senha)
+        usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha)
         return await this.usuarioRepository.save(usuario);
 
     }

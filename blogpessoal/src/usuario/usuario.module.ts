@@ -8,7 +8,7 @@ import { UsuarioService } from './services/usuario.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Usuario])], 
-  providers: [UsuarioService, Bcrypt],
+  providers: [Bcrypt, UsuarioService],
   controllers: [UsuarioController],
   exports: [UsuarioService],
 })
