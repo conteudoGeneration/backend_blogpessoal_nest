@@ -1,4 +1,4 @@
-# Projeto Blog Pessoal (Em desenvolvimento)
+# Projeto Blog Pessoal
 
 <br />
 
