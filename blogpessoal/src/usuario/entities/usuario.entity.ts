@@ -16,12 +16,13 @@ export class Usuario {
     public nome: string
 
     @IsEmail()
+    @IsNotEmpty()
     @Column({length: 255, nullable: false })
     @ApiProperty({example: "email@email.com.br"}) 
     public usuario: string
 
-    @IsNotEmpty()
     @MinLength(8)
+    @IsNotEmpty()
     @Column({length: 255, nullable: false }) 
     @ApiProperty() 
     public senha: string
