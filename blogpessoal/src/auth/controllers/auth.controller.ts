@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { UsuarioLogin } from './../entities/usuariologin.entity';
 
 @ApiTags('Usuario')
-@Controller("/auth")
+@Controller("/usuarios")
 export class AuthController {
     constructor(private authService: AuthService) { }
 
