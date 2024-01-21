@@ -4,7 +4,7 @@ import { Tema } from "../entities/tema.entity";
 import { TemaService } from "../services/tema.service";
 
 @UseGuards(JwtAuthGuard)
-@Controller("/tema")
+@Controller("/temas")
 export class TemaController {
   constructor(private readonly temaService: TemaService) { }
 
