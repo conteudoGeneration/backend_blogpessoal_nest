@@ -14,15 +14,10 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         TypeOrmModule.forRoot({
-          type: 'mysql',
-          host: 'localhost',
-          port: 3306,
-          username: 'root',
-          password: 'root',
-          database: 'db_blogpessoal_test',
-          autoLoadEntities: true,
+          type: "sqlite",
+          database: "db_blogpessoal_test.db",
+          entities: [__dirname + "./../src/**/entities/*.entity.ts"],
           synchronize: true,
-          logging: false,
           dropSchema: true
         }),
         AppModule],
@@ -30,7 +25,6 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
-
   });
 
   afterAll(async () => {
@@ -54,13 +48,13 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
 
   it('02 - Deve Autenticar Usuario (Login)', async () => {
     const resposta = await request(app.getHttpServer())
-      .post('/auth/logar')
+      .post('/usuarios/logar')
       .send({
         usuario: 'root@root.com',
         senha: 'rootroot',
       });
     expect(200)
-    
+
     token = resposta.body.token;
 
   });
@@ -97,7 +91,7 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
         foto: ' '
       })
       .expect(200)
-      .then(resposta =>{
+      .then(resposta => {
         expect("Root Atualizado").toEqual(resposta.body.nome);
       });
   });
