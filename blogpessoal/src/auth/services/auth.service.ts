@@ -33,7 +33,7 @@ export class AuthService{
 
     async login(usuarioLogin: UsuarioLogin){
 
-        const payload = { username: usuarioLogin.usuario, sub: "blogpessoal" }
+        const payload = { sub: usuarioLogin.usuario}
 
         const buscaUsuario = await this.usuarioService.findByUsuario(usuarioLogin.usuario)
 
