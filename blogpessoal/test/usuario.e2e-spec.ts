@@ -15,7 +15,7 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
       imports: [
         TypeOrmModule.forRoot({
           type: "sqlite",
-          database: "db_blogpessoal_test.db",
+          database: ":memory:",
           entities: [__dirname + "./../src/**/entities/*.entity.ts"],
           synchronize: true,
           dropSchema: true
@@ -39,27 +39,14 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
         usuario: 'root@root.com',
         senha: 'rootroot',
         foto: ' '
-      });
-    expect(201)
+      })
+      .expect(201)
 
     usuarioId = resposta.body.id;
 
   });
 
-  it('02 - Deve Autenticar Usuario (Login)', async () => {
-    const resposta = await request(app.getHttpServer())
-      .post('/usuarios/logar')
-      .send({
-        usuario: 'root@root.com',
-        senha: 'rootroot',
-      });
-    expect(200)
-
-    token = resposta.body.token;
-
-  });
-
-  it('03 - Não Deve Duplicar o Usuário', async () => {
+  it('02 - Não Deve Duplicar o Usuário', async () => {
     return request(app.getHttpServer())
       .post('/usuarios/cadastrar')
       .send({
@@ -69,6 +56,19 @@ describe('Testes dos Módulos Usuário e Auth (e2e)', () => {
         foto: ' '
       })
       .expect(400)
+  });
+
+  it('03 - Deve Autenticar Usuario (Login)', async () => {
+    const resposta = await request(app.getHttpServer())
+      .post('/usuarios/logar')
+      .send({
+        usuario: 'root@root.com',
+        senha: 'rootroot',
+      })
+      .expect(200)
+
+    token = resposta.body.token;
+
   });
 
   it('04 - Deve Listar todos os Usuários', async () => {
